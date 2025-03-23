@@ -1,41 +1,44 @@
-import React from 'react'
-import useFetch from './useFetch'
+import "./App.css"
+import useFetch from "./functions/useFetch";
+import NewsCard from "./components/NewsCard";
 
+const demo = {
+  author: "Grace Ikpang",
+  publishedAt: new Date(),
+  title: "Starting out as a Product designer",
+  urlToImage: "https://gizmodo.com/app/uploads/2024/10/Meta-Quest-7-e1742394570642.jpg",
+  description: "Embarking on a journey as a product designer can be an exhilarating and fulfilling experience",
+};
+
+//prettier-ignore
 const App = () => {
+  const { data, error, isLoading } = useFetch( "https://newsapi.org/v2/everything?q=apple&from=2025-03-19&to=2025-03-19&sortBy=popularity&pageSize=10&apiKey=6eea67bca3884f1ab90372ac184ac945" );
 
-  const { datas } = useFetch('https://newsapi.org/v2/everything?q=apple&from=2025-03-19&to=2025-03-19&sortBy=popularity&pageSize=10&apiKey=6eea67bca3884f1ab90372ac184ac945')
-    
-    
+  if (isLoading){ return <p>Loading news...</p>};
+  if (error) return <p>Error: {error}</p>;
+
+  console.log(data);
+  
+
+  if (data) {
+    return (
+      <main className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 px-[5%]">
+          {data.map((demo) => (
+            <NewsCard key={Math.random()} title={demo.title} author={demo.author} urlToImage={demo.urlToImage} description={demo.description} publishedAt={demo.publishedAt} />
+          ))}
+        </div>
+      </main>
+    )
+  }
+
 
   return (
-    <div>
-        <h1 className='text-center border-4 border-indigo-500/100 text-[#000]'>
-          Hello world!
-        </h1> 
-        <h1>
-        {datas.map((data) => 
-          <ul className='card [&>*]:pb-8' key={data.source.id}>
-              <li>
-                  {data.title}
-              </li>   
-              <li>
-                {data.urlToImage} 
-              </li>
-              <li>
-                {data.description}  
-              </li>
-              <li>
-                {data.publishedAt}
-              </li>
-              <img src="https://gizmodo.com/app/uploads/2025/03/Dark_Matter.jpg" alt="" className='w-1/2'/>
-          </ul>
-        )}
-        </h1>
+    <main className="flex px-[5%] pt-10">
+      
+      <NewsCard title={demo.title} author={demo.author} urlToImage={demo.urlToImage} description={demo.description} publishedAt={demo.publishedAt} />
+    </main>
+  );
+};
 
-
-    
-    </div>
-  )
-}
-
-export default App
+export default App;
