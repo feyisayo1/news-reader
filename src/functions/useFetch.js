@@ -6,62 +6,50 @@ const useFetch = (url) => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // const getData = async (url) => {
-  //   setIsLoading(true);
-  //   setError(null);
+  const getData = async (url) => {
+    setIsLoading(true);
+    setError(null);
 
-  //   try {
-  //     const responce = await axios.get(url, {
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     });
-  //     console.dir(responce);
+    try {
+      const responce = await axios.get(url);
+      console.log(responce);
+      
+      setData(responce.data.articles);
+    } catch (err) {
+      setError(err.message || "An Error Occurred while fetching data");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  
+  useEffect(() => {
+    (async () => {
+      setIsLoading(true);
+      setError(null);
 
-  //     setData(responce.data.articles);
-  //   } catch (err) {
-  //     setError(err.message || "An Error Occurred while fetching data");
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
+      try {
+        const response = await axios.get(url);
+        setData(response.data.articles);
+      } catch (error) {
+        setError(error.message || "An Error Occurred while fetching data");
+      }finally{
+        setIsLoading(false);
+      }
+    })();
+  }, []);
 
   // useEffect(() => {
-  //   const getData = async (url) => {
-  //     setIsLoading(true);
-  //     setError(null);
-
-  //     try {
-  //       const responce = await axios.get(url, {
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //       });
-  //       console.dir(responce);
-
-  //       setData(responce.data.articles);
-  //     } catch (err) {
-  //       setError(err.message || "An Error Occurred while fetching data");
-  //     } finally {
-  //       setIsLoading(false);
-  //     }
-  //   };
-
-  //   getData();
+  //   axios.get(url)
+  //     .then((response) => {
+  //       setData(response.data.articles);
+  //     })
+  //     .catch((error) => {
+  //       setError(error.message || "An Error Occurred while fetching data");
+  //     })
+  //     .finally(setIsLoading(false));
   // }, [url]);
 
-  useEffect(() => {
-    axios.get(url)
-      .then((response) => {
-        setData(response.data.articles);
-      })
-      .catch((error) => {
-        setError(error.message || "An Error Occurred while fetching data");
-      })
-      .finally(setIsLoading(false));
-  }, [url]);
-
-  return { data, error, isLoading };
+  return { data, error, isLoading, reFetch: getData };
 };
 
 export default useFetch;

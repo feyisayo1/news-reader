@@ -14,18 +14,18 @@ const NewsCard = ({ title, author, urlToImage, description, publishedAt }) => {
   }
 
   return (
-    <section className="flex flex-col gap-4 border bg-gray-100 shadow-sm border-gray-300 rounded p-3 w-fit text-[12px] leading-none transition-all duration-300 md:p-5 max-w-[450px]">
-      <div className="flex gap-2">
+    <div className="flex flex-col gap-4 border bg-gray-100 shadow-sm border-gray-300 rounded p-3 w-fit text-[12px] transition-all duration-300 md:p-5 max-w-[450px]">
+      <div className="flex gap-2 w-full flex-wrap sm:flex-nowrap">
         <div className="profile min-h-14 min-w-14 min-size-14 rounded-full"></div>
 
         <div className="flex flex-col justify-around">
-          <h2 className="text-[16px] font-medium md:text-[18px]">{author}</h2>
+          <h2 className="text-[14px] font-normal author md:text-[16px]">{author}</h2>
           <p>Published: {newDate}</p>
         </div>
       </div>
 
       <div className="flex flex-col gap-2">
-        <h2 className="font-medium text-[20px] ">{title}</h2>
+        <h2 className="font-medium text-[18px] ">{title}</h2>
 
         <div className="flex gap-2 items-center">
           <Book1 size="20" color="#6a7282 "/>
@@ -34,10 +34,10 @@ const NewsCard = ({ title, author, urlToImage, description, publishedAt }) => {
       </div>
 
       <div className="flex flex-col gap-2 h-full">
-        <p>{description}</p>
+        <p className="description">{description}</p>
         <div style={bgStyle} className="w-full min-h-40 h-full rounded"></div>
       </div>
-    </section>
+    </div>
   );
 };
 
