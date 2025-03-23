@@ -1,5 +1,5 @@
 import "./App.css"
-import useFetch from "./functions/useFetch";
+import useFetch from "./hooks/useFetch";
 import NewsCard from "./components/NewsCard";
 import LoadingState from "./components/LoadingState";
 
@@ -23,8 +23,8 @@ const App = () => {
   return (
     <main className="min-h-screen flex items-center justify-center bg-gray-50 py-20">
       <section className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 px-[5%]">
-        {data.map((demo) => (
-          <NewsCard key={Math.random()} title={demo.title} author={demo.author} urlToImage={demo.urlToImage} description={demo.description} publishedAt={demo.publishedAt} />
+        {data.map((article) => (
+          <NewsCard key={article.id} id={article.id} title={article.title} author={article.author} urlToImage={article.urlToImage} description={article.description} publishedAt={article.publishedAt} />
         ))}
       </section>
     </main>
